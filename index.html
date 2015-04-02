@@ -71,8 +71,28 @@
           
           <h4>Eric Martindale</h4>
           <p>
-            <small><a href="https://github.com/martindale">@martindale</a> &bull; Google &bull; April 2nd, 2015</small>
+            <small><a href="https://github.com/martindale">@martindale</a> &bull; Google Interview &bull; April 2nd, 2015</small>
           </p>
+        </section>
+        
+        <section>
+          <h2>What is this Bitcoin thing, anyway?</h2>
+          <h3 class="fragment">(we're actually talking about the "blockchain")</h3>
+        </section>
+        
+        <section>
+          <h3>Computer Science Perspective...</h3>
+          <h2 class="fragment">distributed consensus algorithm</h2>
+        </section>
+        
+        <section>
+          <h3>Financial Perspective...</h3>
+          <h2 class="fragment">triple-entry accounting system</h2>
+        </section>
+        
+        <section>
+          <h3>Hacker's Perspective...</h3>
+          <h2 class="fragment">crack-proof decentralized database</h2>
         </section>
 
         <section data-background="#3a3a3a">
@@ -398,6 +418,129 @@ var serialized = multiSigTransaction.serialize();
             <p>- CoinJoin?</p>
           </section>
 
+        </section>
+        
+        <section>
+
+          <section>
+            <h1>ChainDB<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small style="font-size: 0.5em;">by <em>bitpay</em></small></h1>
+            <h2 class="fragment">blockchain database framework</h2>
+            <h3 class="fragment">define your own, <em>custom</em> transaction rules</h3>
+            <h3 class="fragment" style="margin-top: 1em;">Secured by the Bitcoin Blockchain.</h3>
+            
+            <h3 style="margin-top: 2em;"><code><!-- github.com/bitpay/chaindb --></code></h3>
+          </section>
+          
+          <section>
+            <h3>What is a blockchain?</h3>
+            
+            <ul>
+              <li class="fragment">Distributed system</li>
+              <li class="fragment">Tamper-resistant history</li>
+              <li class="fragment">Rewind, Replay, Resume</li>
+              <li class="fragment">Data Consistency</li>
+            </ul>
+          </section>
+          
+          <section>
+            <pre><code data-trim style="font-size: 1.4em; line-height: 1.2em;">
+var ChainDB = require('chaindb');
+var chaindb = new ChainDB({
+  consensus: {
+    type: 'pof', // proof of fee
+    xprivkey: 'someprivkey', // bitcoin HD private key with funds
+  },
+  db: {
+    type: 'simple', // simple key-value datastore
+    path: './pof-simple.db' // actual on-disk storage
+  }
+});
+
+chaindb.on('ready', function() {
+  // set value...
+  chaindb.set( 'somekey' , 'somevalue' , function(err) {} );
+  
+  // retrieve value!
+  chaindb.get( 'somekey' , function(err, value) {
+    console.log('somekey:', value );
+  });
+
+});
+
+chaindb.initialize();
+            </code></pre>
+          </section>
+          
+          <section>
+            <h3>Proof of Fee</h3>
+            <h4 class="fragment">resolve chain conflicts not based on block height,</h4>
+            <h4 class="fragment">but based on the Bitcoin spent for the entire chain,</h4>
+            <h4 class="fragment">weighted towards older blocks.</h4>
+          </section>
+
+          <section>
+            <h3>Applications (Short Term)</h3>
+            <ul>
+              <li class="fragment">
+                Key-value stores
+                <ul>
+                  <li class="fragment">Proof of Existence</li>
+                  <li class="fragment">DNS for Public Key Hashes</li>
+                  <li class="fragment">DNS for, well, DNS</li>
+                </ul>
+              </li>
+              <li class="fragment">
+                Document stores
+                <ul>
+                  <li class="fragment">Tamper-proofing existing databases</li>
+                  <li class="fragment">Atomic snapshots</li>
+                  <li class="fragment">Verifiable state history</li>
+                </ul>
+              </li>
+            </ul>
+          </section>
+          
+          <section>
+            <h3>Applications (Long Term)</h3>
+            <ul>
+              <li class="fragment">Replace the SSL/TLS PKI (eliminate CAs)</li>
+              <li class="fragment">Identity Assertion</li>
+              <li class="fragment">
+                Proof of Ownership
+                <ul>
+                  <li class="fragment">Deeds</li>
+                  <li class="fragment">Titles</li>
+                  <li class="fragment">Equity</li>
+                </ul>
+              </li>
+              <li class="fragment">Smart Contracts</li>
+            </ul>
+          </section>
+          
+          <section>
+            <h3>Other Projects</h3>
+          
+            <table>
+              <tr>
+                <td><h4>Namecoin</h4></td>
+                <td><code>namecoin.org</code></td>
+              </tr>
+              <tr>
+                <td><h4>DNSChain</h4></td>
+                <td><code>github.com/okTurtles/dnschain</code></td>
+              </tr>
+              <tr>
+                <td><h4>Blockstore</h4></td>
+                <td><code>github.com/openname/blockstore</code></td>
+              </tr>
+              <tr>
+                <td><h4>DEJE</h4></td>
+                <td><code>github.com/DJDNS/go-deje</code></td>
+              </tr>
+            </table>
+
+          </section>
+          
         </section>
 
         <section>
